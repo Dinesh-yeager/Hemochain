@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hemo Chain - Blockchain-powered blood donation platform connecting donors, hospitals, and blood banks securely.">
+<title>Hemo Chain — Blockchain Blood Donation Platform</title>
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩸</text></svg>">
+</head>
+<body>
+
+<!-- Emergency Ticker -->
+<div class="ticker" id="ticker">
+<div class="ticker-content" id="tickerContent"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+<div class="nav-container">
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 3C18 3 6 16 6 23a12 12 0 0024 0C30 16 18 3 18 3z" fill="#DC143C"/>
+      <rect x="14" y="14" width="8" height="2" rx="1" fill="#fff"/>
+      <rect x="14" y="18" width="8" height="2" rx="1" fill="#fff"/>
+      <rect x="14" y="22" width="8" height="2" rx="1" fill="#fff"/>
+      <path d="M12 16h1v6h-1z" fill="#fff" opacity="0.5"/>
+      <path d="M23 16h1v6h-1z" fill="#fff" opacity="0.5"/>
+    </svg>
+    <span>Hemo<span class="highlight">Chain</span></span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#hero">Home</a>
+    <a href="#dashboard">Find Blood</a>
+    <a href="#how-it-works">Donate</a>
+    <a href="#network">Hospitals</a>
+    <a href="#emergency">Emergency</a>
+  </div>
+  <div class="nav-cta">
+    <a href="auth.html" class="btn btn-outline" id="loginBtn">Login</a>
+    <a href="auth.html" class="btn btn-primary" id="registerBtn">Register</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="hero">
+<div class="hero-glow hero-glow-1"></div>
+<div class="hero-glow hero-glow-2"></div>
+<div class="hero-bg"><canvas id="waveCanvas"></canvas></div>
+<div class="hero-container">
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Powered by Blockchain Technology</div>
+    <h1>Saving Lives Through Secure Blood Donation</h1>
+    <p>Connecting donors, hospitals, and blood banks through a transparent, blockchain-secured platform. Every drop tracked. Every life matters.</p>
+    <div class="hero-buttons">
+      <button class="btn btn-primary btn-lg" id="donateBtn"><span class="material-symbols-rounded">bloodtype</span> Donate Blood</button>
+      <button class="btn btn-outline btn-lg" id="requestBtn"><span class="material-symbols-rounded">local_hospital</span> Request Blood</button>
+    </div>
+    <div class="stats-float" id="statsFloat">
+      <div class="stat-card"><div class="stat-icon"><span class="material-symbols-rounded">favorite</span></div><div class="stat-number" data-target="24580">0</div><div class="stat-label">Total Donors</div></div>
+      <div class="stat-card"><div class="stat-icon"><span class="material-symbols-rounded">bloodtype</span></div><div class="stat-number" data-target="8420">0</div><div class="stat-label">Blood Units Available</div></div>
+      <div class="stat-card"><div class="stat-icon"><span class="material-symbols-rounded">local_hospital</span></div><div class="stat-number" data-target="1250">0</div><div class="stat-label">Hospitals Connected</div></div>
+      <div class="stat-card"><div class="stat-icon"><span class="material-symbols-rounded">volunteer_activism</span></div><div class="stat-number" data-target="52300">0</div><div class="stat-label">Lives Saved</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-illustration float-anim">
+      <svg class="ecg-line" viewBox="0 0 500 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 50 L100 50 L120 20 L140 80 L160 10 L180 90 L200 50 L300 50 L320 30 L340 70 L360 20 L380 80 L400 50 L500 50" stroke="#DC143C" stroke-width="2" fill="none" opacity="0.6">
+          <animate attributeName="stroke-dashoffset" from="1500" to="0" dur="3s" repeatCount="indefinite"/>
+          <set attributeName="stroke-dasharray" to="1500"/>
+        </path>
+      </svg>
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;top:0;left:0">
+        <!-- Central blood drop -->
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#DC143C" stop-opacity="0.3"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+          <linearGradient id="dropGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DC143C"/><stop offset="100%" stop-color="#8B0000"/></linearGradient>
+        </defs>
+        <circle cx="200" cy="200" r="180" fill="url(#glow)"/>
+        <path d="M200 80C200 80 120 180 120 230a80 80 0 00160 0C280 180 200 80 200 80z" fill="url(#dropGrad)" opacity="0.9">
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+        </path>
+        <!-- Blockchain nodes -->
+        <circle cx="200" cy="200" r="12" fill="#fff" opacity="0.9"/>
+        <circle cx="150" cy="170" r="6" fill="#DC143C" opacity="0.7"/>
+        <circle cx="250" cy="170" r="6" fill="#DC143C" opacity="0.7"/>
+        <circle cx="170" cy="240" r="6" fill="#DC143C" opacity="0.7"/>
+        <circle cx="230" cy="240" r="6" fill="#DC143C" opacity="0.7"/>
+        <line x1="200" y1="200" x2="150" y2="170" stroke="#DC143C" stroke-width="1" opacity="0.4"/>
+        <line x1="200" y1="200" x2="250" y2="170" stroke="#DC143C" stroke-width="1" opacity="0.4"/>
+        <line x1="200" y1="200" x2="170" y2="240" stroke="#DC143C" stroke-width="1" opacity="0.4"/>
+        <line x1="200" y1="200" x2="230" y2="240" stroke="#DC143C" stroke-width="1" opacity="0.4"/>
+        <!-- Orbiting rings -->
+        <ellipse cx="200" cy="200" rx="140" ry="50" stroke="#DC143C" stroke-width="0.5" fill="none" opacity="0.2" transform="rotate(-20 200 200)">
+          <animateTransform attributeName="transform" type="rotate" from="-20 200 200" to="340 200 200" dur="20s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="200" cy="200" rx="120" ry="40" stroke="#DC143C" stroke-width="0.5" fill="none" opacity="0.15" transform="rotate(40 200 200)">
+          <animateTransform attributeName="transform" type="rotate" from="40 200 200" to="400 200 200" dur="25s" repeatCount="indefinite"/>
+        </ellipse>
+        <!-- Plus sign inside drop -->
+        <rect x="190" y="180" width="20" height="4" rx="2" fill="#fff" opacity="0.9"/>
+        <rect x="198" y="172" width="4" height="20" rx="2" fill="#fff" opacity="0.9"/>
+      </svg>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Live Blood Availability Dashboard -->
+<section class="section" id="dashboard">
+<div class="container">
+  <div class="section-header reveal">
+    <span class="section-tag"><span class="material-symbols-rounded">dashboard</span> Live Dashboard</span>
+    <h2>Blood Availability Tracker</h2>
+    <p>Real-time blood inventory across all connected hospitals and blood banks, updated every 30 seconds via blockchain.</p>
+  </div>
+  <div class="dashboard-grid reveal" id="bloodGrid"></div>
+  <div class="dashboard-info reveal">
+    <div class="info-card">
+      <div class="info-icon"><span class="material-symbols-rounded">link</span></div>
+      <div><h4>Blockchain Verified</h4><p>Every unit is tracked from donation to transfusion with an immutable ledger ensuring complete transparency.</p></div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon"><span class="material-symbols-rounded">timer</span></div>
+      <div><h4>Real-Time Updates</h4><p>Inventory syncs every 30 seconds across all connected facilities, ensuring accurate availability data.</p></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Emergency Blood Request -->
+<section class="section emergency-section" id="emergency">
+<div class="container">
+  <div class="section-header reveal">
+    <span class="section-tag"><span class="material-symbols-rounded">emergency</span> Emergency</span>
+    <h2>Emergency Blood Request</h2>
+    <p>Critical situations demand immediate action. Our AI-powered system matches requests with nearest available donors in seconds.</p>
+  </div>
+  <div class="emergency-grid reveal">
+    <div class="emergency-form">
+      <h3><span class="material-symbols-rounded">ambulance</span> Request Blood Now</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Patient Name</label><input type="text" placeholder="Full name" id="patientName"></div>
+        <div class="form-group"><label>Blood Group</label><select id="bloodGroup"><option>Select Type</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Hospital</label><input type="text" placeholder="Hospital name" id="hospitalName"></div>
+        <div class="form-group"><label>Units Required</label><input type="number" placeholder="No. of units" id="unitsReq" min="1"></div>
+      </div>
+      <div class="form-group"><label>Emergency Contact</label><input type="tel" placeholder="+91 XXXXX XXXXX" id="emergencyPhone"></div>
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-top:8px" id="submitEmergency"><span class="material-symbols-rounded">emergency</span> Submit Emergency Request</button>
+    </div>
+    <div class="emergency-info">
+      <div class="emergency-card"><div class="e-icon"><span class="material-symbols-rounded">bolt</span></div><div><h4>Instant AI Matching</h4><p>Our AI engine scans all connected blood banks and matches your request with the nearest available units within 60 seconds.</p></div></div>
+      <div class="emergency-card"><div class="e-icon"><span class="material-symbols-rounded">location_on</span></div><div><h4>GPS-Based Routing</h4><p>Live GPS tracking connects you with the closest donor or blood bank, minimizing delivery time in critical situations.</p></div></div>
+      <div class="emergency-card"><div class="e-icon"><span class="material-symbols-rounded">notifications_active</span></div><div><h4>SMS & Push Alerts</h4><p>Instant notifications sent to all eligible donors within a 10km radius, dramatically increasing response rates.</p></div></div>
+      <div class="emergency-card"><div class="e-icon"><span class="material-symbols-rounded">qr_code_scanner</span></div><div><h4>QR Verification</h4><p>Every blood unit comes with a blockchain-verified QR code ensuring authenticity, safety, and complete traceability.</p></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Blockchain Security -->
+<section class="section blockchain-section" id="blockchain">
+<div class="container">
+  <div class="section-header reveal">
+    <span class="section-tag"><span class="material-symbols-rounded">security</span> Security</span>
+    <h2>Blockchain-Powered Security</h2>
+    <p>Every transaction on Hemo Chain is secured by distributed ledger technology, ensuring tamper-proof records and complete transparency.</p>
+  </div>
+  <div class="blockchain-grid reveal">
+    <div class="chain-card"><div class="chain-icon"><span class="material-symbols-rounded">link</span></div><h3>Immutable Records</h3><p>Once recorded, donation data cannot be altered or deleted. Complete audit trail from donor to recipient.</p></div>
+    <div class="chain-card"><div class="chain-icon"><span class="material-symbols-rounded">verified_user</span></div><h3>Decentralized Verification</h3><p>Multi-node verification ensures no single point of failure. Data integrity maintained across the network.</p></div>
+    <div class="chain-card"><div class="chain-icon"><span class="material-symbols-rounded">description</span></div><h3>Smart Contracts</h3><p>Automated protocols manage inventory, match requests, and trigger alerts without human intervention.</p></div>
+    <div class="chain-card"><div class="chain-icon"><span class="material-symbols-rounded">fact_check</span></div><h3>Transparent Audit Trail</h3><p>Full traceability of every blood unit from collection to transfusion, accessible to all stakeholders.</p></div>
+    <div class="chain-card"><div class="chain-icon"><span class="material-symbols-rounded">lock</span></div><h3>HIPAA Compliant</h3><p>End-to-end encryption with zero-knowledge proofs ensures patient privacy while maintaining data integrity.</p></div>
+    <div class="chain-card"><div class="chain-icon"><span class="material-symbols-rounded">analytics</span></div><h3>Real-Time Analytics</h3><p>Live dashboards powered by blockchain data provide actionable insights for hospitals and blood banks.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- How Hemo Chain Works -->
+<section class="section how-section" id="how-it-works">
+<div class="container">
+  <div class="section-header reveal">
+    <span class="section-tag"><span class="material-symbols-rounded">settings</span> Process</span>
+    <h2>How Hemo Chain Works</h2>
+    <p>From registration to saving lives — a seamless, blockchain-secured journey in just four simple steps.</p>
+  </div>
+  <div class="steps-grid reveal">
+    <div class="step-card"><div class="step-number">1</div><h3>Register & Verify</h3><p>Create your profile with Aadhaar/ID verification. Your identity is securely stored on the blockchain.</p></div>
+    <div class="step-card"><div class="step-number">2</div><h3>Donate or Request</h3><p>Schedule a donation or submit a blood request. Our AI matches donors with recipients instantly.</p></div>
+    <div class="step-card"><div class="step-number">3</div><h3>Blockchain Tracking</h3><p>Every unit is tracked in real-time with QR codes. From collection to testing to delivery.</p></div>
+    <div class="step-card"><div class="step-number">4</div><h3>Save Lives</h3><p>Blood reaches patients faster and safer. Every transaction is recorded and rewarded.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- Real-Time Donor Matching -->
+<section class="section" id="matching">
+<div class="container">
+  <div class="section-header reveal">
+    <span class="section-tag"><span class="material-symbols-rounded">smart_toy</span> AI Matching</span>
+    <h2>Real-Time Donor Matching</h2>
+    <p>Our AI engine analyzes blood type compatibility, proximity, and availability to find the perfect match in seconds.</p>
+  </div>
+  <div class="matching-grid reveal">
+    <div class="matching-visual" id="matchingVisual"></div>
+    <div class="matching-features">
+      <div class="match-feature"><div class="mf-icon"><span class="material-symbols-rounded">biotech</span></div><div><h4>Smart Compatibility</h4><p>AI cross-references blood types, antibodies, and medical history for optimal matching with 99.9% accuracy.</p></div></div>
+      <div class="match-feature"><div class="mf-icon"><span class="material-symbols-rounded">location_on</span></div><div><h4>Proximity Analysis</h4><p>GPS-based location tracking identifies nearest donors, reducing transit time to under 30 minutes.</p></div></div>
+      <div class="match-feature"><div class="mf-icon"><span class="material-symbols-rounded">schedule</span></div><div><h4>Availability Prediction</h4><p>Machine learning predicts donor availability patterns, ensuring round-the-clock coverage.</p></div></div>
+      <div class="match-feature"><div class="mf-icon"><span class="material-symbols-rounded">inventory_2</span></div><div><h4>Inventory Optimization</h4><p>Real-time analytics prevent shortages by predicting demand and redistributing supply across the network.</p></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Hospital & Blood Bank Network -->
+<section class="section network-section" id="network">
+<div class="container">
+  <div class="section-header reveal">
+    <span class="section-tag"><span class="material-symbols-rounded">local_hospital</span> Network</span>
+    <h2>Hospital & Blood Bank Network</h2>
+    <p>A growing ecosystem of verified healthcare facilities, all connected through our secure blockchain infrastructure.</p>
+  </div>
+  <div class="network-stats reveal">
+    <div class="net-stat"><div class="ns-value" data-target="1250">0</div><div class="ns-label">Partner Hospitals</div></div>
+    <div class="net-stat"><div class="ns-value" data-target="340">0</div><div class="ns-label">Blood Banks</div></div>
+    <div class="net-stat"><div class="ns-value" data-target="28">0</div><div class="ns-label">States Covered</div></div>
+  </div>
+  <div class="network-map reveal">
+    <div class="map-dots" id="mapDots"></div>
+  </div>
+</div>
+</section>
+
+<!-- Testimonials -->
+<section class="section" id="testimonials">
+<div class="container">
+  <div class="section-header reveal">
+    <span class="section-tag"><span class="material-symbols-rounded">forum</span> Testimonials</span>
+    <h2>Stories That Inspire</h2>
+    <p>Real stories from donors, recipients, and healthcare professionals who trust Hemo Chain.</p>
+  </div>
+  <div class="testimonials-grid reveal">
+    <div class="testimonial-card">
+      <div class="stars"><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span></div>
+      <p class="quote">"Hemo Chain made it incredibly easy to find blood during my father's emergency surgery. The blockchain verification gave us complete peace of mind."</p>
+      <div class="testimonial-author"><div class="testimonial-avatar">RK</div><div class="testimonial-info"><h4>Rajesh Kumar</h4><p>Blood Recipient's Family</p></div></div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars"><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span></div>
+      <p class="quote">"As a regular donor, I love tracking where my blood goes. The transparency is unmatched. I've saved 12 lives so far and each one is recorded."</p>
+      <div class="testimonial-author"><div class="testimonial-avatar">PS</div><div class="testimonial-info"><h4>Priya Sharma</h4><p>Regular Blood Donor</p></div></div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars"><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span><span class="material-symbols-rounded">star</span></div>
+      <p class="quote">"Our hospital's blood management has been revolutionized. Real-time inventory, automated matching, and zero wastage. A game-changer for healthcare."</p>
+      <div class="testimonial-author"><div class="testimonial-avatar">DA</div><div class="testimonial-info"><h4>Dr. Anita Desai</h4><p>Chief Medical Officer</p></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section" id="faq">
+<div class="container">
+  <div class="section-header reveal">
+    <span class="section-tag"><span class="material-symbols-rounded">help</span> FAQ</span>
+    <h2>Frequently Asked Questions</h2>
+    <p>Everything you need to know about Hemo Chain and blockchain-powered blood donation.</p>
+  </div>
+  <div class="faq-grid reveal" id="faqGrid"></div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="footer">
+<div class="container">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 3C18 3 6 16 6 23a12 12 0 0024 0C30 16 18 3 18 3z" fill="#DC143C"/><rect x="14" y="14" width="8" height="2" rx="1" fill="#fff"/><rect x="14" y="18" width="8" height="2" rx="1" fill="#fff"/><rect x="14" y="22" width="8" height="2" rx="1" fill="#fff"/></svg>
+        <span>Hemo<span class="highlight">Chain</span></span>
+      </a>
+      <p>India's first blockchain-powered blood donation platform. Transparent, secure, and life-saving.</p>
+    </div>
+    <div><h4>Platform</h4><ul><li><a href="#">Find Blood</a></li><li><a href="#">Donate Blood</a></li><li><a href="#">Emergency Request</a></li><li><a href="#">Blood Banks</a></li><li><a href="#">Hospitals</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Our Mission</a></li><li><a href="#">Careers</a></li><li><a href="#">Press Kit</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div><h4>Resources</h4><ul><li><a href="#">Documentation</a></li><li><a href="#">API Access</a></li><li><a href="#">Blockchain Explorer</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
+    <div class="footer-newsletter"><h4>Stay Updated</h4><p style="font-size:13px;color:var(--gray);margin-bottom:12px">Get notified about blood drives and platform updates.</p><input type="email" placeholder="Enter your email" id="newsletterEmail"><button class="btn btn-primary" style="width:100%;justify-content:center" id="subscribeBtn">Subscribe</button></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 HemoChain. All rights reserved. Made with <span class="material-symbols-rounded" style="font-size:16px;color:var(--crimson);vertical-align:middle">favorite</span> for saving lives.</p>
+    <div class="footer-socials">
+      <a href="#" aria-label="Twitter"><span class="material-symbols-rounded">public</span></a>
+      <a href="#" aria-label="GitHub"><span class="material-symbols-rounded">code</span></a>
+      <a href="#" aria-label="LinkedIn"><span class="material-symbols-rounded">work</span></a>
+      <a href="#" aria-label="Instagram"><span class="material-symbols-rounded">photo_camera</span></a>
+    </div>
+  </div>
+</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

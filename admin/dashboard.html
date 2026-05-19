@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hemo Chain super admin dashboard for healthcare platform operations and analytics.">
+  <title>Hemo Chain - Super Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200">
+  <link rel="stylesheet" href="./admin.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cpath d='M40 5C40 5 13 33 13 50a27 27 0 1054 0C67 33 40 5 40 5z' fill='%23DC143C'/%3E%3Cpath d='M30 38h20v5H30zm0 10h20v5H30z' fill='white'/%3E%3C/svg%3E">
+</head>
+<body class="admin-app-page">
+  <aside class="admin-sidebar" id="adminSidebar" aria-label="Super admin navigation">
+    <div class="sidebar-head">
+      <a class="brand-mark" href="./dashboard.html" aria-label="Hemo Chain admin dashboard">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 4S8 21.2 8 31.2a16 16 0 0032 0C40 21.2 24 4 24 4z" fill="currentColor"/>
+          <rect x="17" y="21" width="14" height="3" rx="1.5" fill="#fff"/>
+          <rect x="17" y="28" width="14" height="3" rx="1.5" fill="#fff"/>
+        </svg>
+        <span>Hemo <strong>Chain</strong></span>
+      </a>
+      <button class="icon-button sidebar-collapse" id="collapseSidebar" type="button" aria-label="Collapse sidebar">
+        <span class="material-symbols-rounded">left_panel_close</span>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-link active" type="button" data-target="dashboard">
+        <span class="material-symbols-rounded">dashboard</span>
+        <span class="nav-label">Dashboard</span>
+      </button>
+      <button class="nav-link" type="button" data-target="users">
+        <span class="material-symbols-rounded">manage_accounts</span>
+        <span class="nav-label">Users Management</span>
+      </button>
+      <button class="nav-link" type="button" data-target="donors">
+        <span class="material-symbols-rounded">volunteer_activism</span>
+        <span class="nav-label">Donor Management</span>
+      </button>
+      <button class="nav-link" type="button" data-target="hospitals">
+        <span class="material-symbols-rounded">local_hospital</span>
+        <span class="nav-label">Hospital Management</span>
+      </button>
+      <button class="nav-link" type="button" data-target="bloodbanks">
+        <span class="material-symbols-rounded">inventory_2</span>
+        <span class="nav-label">Blood Banks</span>
+      </button>
+      <button class="nav-link" type="button" data-target="emergency">
+        <span class="material-symbols-rounded">emergency</span>
+        <span class="nav-label">Emergency Requests</span>
+        <span class="nav-badge" id="sideEmergencyCount">12</span>
+      </button>
+      <button class="nav-link" type="button" data-target="inventory">
+        <span class="material-symbols-rounded">bloodtype</span>
+        <span class="nav-label">Blood Inventory</span>
+      </button>
+      <button class="nav-link" type="button" data-target="analytics">
+        <span class="material-symbols-rounded">query_stats</span>
+        <span class="nav-label">Reports &amp; Analytics</span>
+      </button>
+      <button class="nav-link" type="button" data-target="verification">
+        <span class="material-symbols-rounded">verified_user</span>
+        <span class="nav-label">Blockchain Verification</span>
+      </button>
+      <button class="nav-link" type="button" data-target="notifications">
+        <span class="material-symbols-rounded">notifications</span>
+        <span class="nav-label">Notifications</span>
+      </button>
+      <button class="nav-link" type="button" data-target="settings">
+        <span class="material-symbols-rounded">settings</span>
+        <span class="nav-label">Settings</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="admin-mini">
+        <div class="avatar">SA</div>
+        <div>
+          <strong>Super Admin</strong>
+          <span>Operations Control</span>
+        </div>
+      </div>
+      <button class="nav-link logout-link" id="logoutButton" type="button">
+        <span class="material-symbols-rounded">logout</span>
+        <span class="nav-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="mobile-scrim" id="mobileScrim"></div>
+
+  <div class="admin-main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-button mobile-menu" id="mobileMenu" type="button" aria-label="Open navigation">
+          <span class="material-symbols-rounded">menu</span>
+        </button>
+        <div>
+          <h1 id="viewTitle">Dashboard</h1>
+          <p id="viewSubtitle">Live overview of Hemo Chain operations.</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <label class="global-search" for="globalSearch">
+          <span class="material-symbols-rounded">search</span>
+          <input id="globalSearch" type="search" placeholder="Search users, hospitals, requests">
+        </label>
+        <button class="alert-pill" type="button" data-target-shortcut="emergency">
+          <span class="material-symbols-rounded">emergency_home</span>
+          <strong id="topEmergencyCount">12</strong>
+          <span>live alerts</span>
+        </button>
+        <button class="icon-button" id="notificationsToggle" type="button" aria-label="Open notifications">
+          <span class="material-symbols-rounded">notifications</span>
+          <span class="button-dot"></span>
+        </button>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle dark mode">
+          <span class="material-symbols-rounded">dark_mode</span>
+        </button>
+        <button class="profile-button" id="profileToggle" type="button" aria-label="Open admin profile menu">
+          <span class="avatar">SA</span>
+          <span class="profile-copy">Super Admin</span>
+          <span class="material-symbols-rounded">expand_more</span>
+        </button>
+      </div>
+      <div class="profile-menu" id="profileMenu">
+        <button type="button" data-target-shortcut="settings"><span class="material-symbols-rounded">admin_panel_settings</span> Access Control</button>
+        <button type="button" data-target-shortcut="verification"><span class="material-symbols-rounded">shield_lock</span> Verification Status</button>
+        <button type="button" id="profileLogout"><span class="material-symbols-rounded">logout</span> Sign Out</button>
+      </div>
+    </header>
+
+    <aside class="notification-drawer" id="notificationDrawer" aria-label="Notifications panel">
+      <div class="drawer-head">
+        <div>
+          <strong>Notifications</strong>
+          <span>Live operational events</span>
+        </div>
+        <button class="icon-button" id="closeNotifications" type="button" aria-label="Close notifications">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+      <div class="notification-list compact">
+        <article class="notification-item critical" data-search="emergency request unity medical center o negative critical">
+          <span class="material-symbols-rounded">emergency</span>
+          <div>
+            <strong>Critical O- request</strong>
+            <p>Unity Medical Center needs 6 units within 45 minutes.</p>
+            <small>2 min ago</small>
+          </div>
+        </article>
+        <article class="notification-item warning" data-search="low blood stock a positive city blood bank">
+          <span class="material-symbols-rounded">bloodtype</span>
+          <div>
+            <strong>Low A+ stock</strong>
+            <p>City Blood Bank has crossed the low stock threshold.</p>
+            <small>8 min ago</small>
+          </div>
+        </article>
+        <article class="notification-item success" data-search="new hospital registration verified">
+          <span class="material-symbols-rounded">local_hospital</span>
+          <div>
+            <strong>Hospital registration</strong>
+            <p>Greenline Hospital completed account verification.</p>
+            <small>18 min ago</small>
+          </div>
+        </article>
+        <article class="notification-item neutral" data-search="system update backup completed">
+          <span class="material-symbols-rounded">cloud_done</span>
+          <div>
+            <strong>Backup completed</strong>
+            <p>Encrypted record backup finished successfully.</p>
+            <small>35 min ago</small>
+          </div>
+        </article>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <section class="view active" id="dashboardView" data-title="Dashboard" data-subtitle="Live overview of Hemo Chain operations.">
+        <div class="operations-hero">
+          <div>
+            <span class="section-kicker"><span class="status-dot"></span> Live Super Admin Control</span>
+            <h2>Platform health, emergency response, and verified data in one command center.</h2>
+            <p>Monitor donors, hospitals, blood banks, inventory, reports, and secure verification without exposing technical blockchain tooling.</p>
+          </div>
+          <div class="hero-status-panel">
+            <span class="material-symbols-rounded">shield_lock</span>
+            <div>
+              <strong>Secure Verified Data</strong>
+              <p>Encrypted record status: Healthy</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric-card red" data-search="total donors 24580">
+            <div class="metric-top">
+              <span class="metric-icon material-symbols-rounded">volunteer_activism</span>
+              <span class="trend positive">+12.4%</span>
+            </div>
+            <strong class="counter" data-count="24580">0</strong>
+            <span>Total Donors</span>
+            <svg class="sparkline" viewBox="0 0 120 36" aria-hidden="true"><path d="M2 28 L18 23 L34 26 L50 15 L66 18 L82 9 L100 13 L118 5"/></svg>
+          </article>
+          <article class="metric-card blue" data-search="total hospitals 186">
+            <div class="metric-top">
+              <span class="metric-icon material-symbols-rounded">local_hospital</span>
+              <span class="trend positive">+4.8%</span>
+            </div>
+            <strong class="counter" data-count="186">0</strong>
+            <span>Total Hospitals</span>
+            <svg class="sparkline" viewBox="0 0 120 36" aria-hidden="true"><path d="M2 26 L18 21 L34 20 L50 16 L66 17 L82 12 L100 10 L118 7"/></svg>
+          </article>
+          <article class="metric-card green" data-search="blood banks connected 74">
+            <div class="metric-top">
+              <span class="metric-icon material-symbols-rounded">inventory_2</span>
+              <span class="trend positive">+6.2%</span>
+            </div>
+            <strong class="counter" data-count="74">0</strong>
+            <span>Blood Banks Connected</span>
+            <svg class="sparkline" viewBox="0 0 120 36" aria-hidden="true"><path d="M2 27 L18 22 L34 24 L50 20 L66 12 L82 13 L100 8 L118 10"/></svg>
+          </article>
+          <article class="metric-card orange" data-search="emergency requests today 32">
+            <div class="metric-top">
+              <span class="metric-icon material-symbols-rounded">emergency</span>
+              <span class="trend negative">+9 urgent</span>
+            </div>
+            <strong class="counter" data-count="32">0</strong>
+            <span>Emergency Requests Today</span>
+            <svg class="sparkline" viewBox="0 0 120 36" aria-hidden="true"><path d="M2 30 L18 18 L34 26 L50 12 L66 20 L82 7 L100 15 L118 6"/></svg>
+          </article>
+          <article class="metric-card violet" data-search="blood units available 8420">
+            <div class="metric-top">
+              <span class="metric-icon material-symbols-rounded">bloodtype</span>
+              <span class="trend positive">+3.1%</span>
+            </div>
+            <strong class="counter" data-count="8420">0</strong>
+            <span>Blood Units Available</span>
+            <svg class="sparkline" viewBox="0 0 120 36" aria-hidden="true"><path d="M2 24 L18 25 L34 17 L50 18 L66 12 L82 15 L100 9 L118 11"/></svg>
+          </article>
+          <article class="metric-card charcoal" data-search="active donations 918">
+            <div class="metric-top">
+              <span class="metric-icon material-symbols-rounded">favorite</span>
+              <span class="trend positive">+18.6%</span>
+            </div>
+            <strong class="counter" data-count="918">0</strong>
+            <span>Active Donations</span>
+            <svg class="sparkline" viewBox="0 0 120 36" aria-hidden="true"><path d="M2 31 L18 24 L34 28 L50 19 L66 15 L82 16 L100 8 L118 5"/></svg>
+          </article>
+        </div>
+
+        <div class="analytics-grid">
+          <article class="panel large" data-search="monthly donations graph line chart">
+            <div class="panel-head">
+              <div>
+                <h3>Monthly Donations</h3>
+                <p>Collected units across verified donation drives.</p>
+              </div>
+              <span class="panel-chip">Line</span>
+            </div>
+            <div class="line-chart">
+              <svg viewBox="0 0 640 260" aria-label="Monthly donations line chart">
+                <g class="grid-lines">
+                  <path d="M40 40H610M40 92H610M40 144H610M40 196H610"/>
+                </g>
+                <path class="area-path" d="M40 202 L92 172 L144 180 L196 132 L248 140 L300 92 L352 116 L404 76 L456 88 L508 58 L560 70 L610 42 L610 224 L40 224 Z"/>
+                <path class="line-path" d="M40 202 L92 172 L144 180 L196 132 L248 140 L300 92 L352 116 L404 76 L456 88 L508 58 L560 70 L610 42"/>
+                <g class="chart-dots">
+                  <circle cx="40" cy="202" r="5"/><circle cx="92" cy="172" r="5"/><circle cx="144" cy="180" r="5"/><circle cx="196" cy="132" r="5"/><circle cx="248" cy="140" r="5"/><circle cx="300" cy="92" r="5"/><circle cx="352" cy="116" r="5"/><circle cx="404" cy="76" r="5"/><circle cx="456" cy="88" r="5"/><circle cx="508" cy="58" r="5"/><circle cx="560" cy="70" r="5"/><circle cx="610" cy="42" r="5"/>
+                </g>
+              </svg>
+            </div>
+          </article>
+
+          <article class="panel" data-search="blood group demand chart pie">
+            <div class="panel-head">
+              <div>
+                <h3>Blood Group Demand</h3>
+                <p>Requests by type.</p>
+              </div>
+              <span class="panel-chip">Pie</span>
+            </div>
+            <div class="donut-wrap">
+              <div class="donut-chart" aria-label="Blood demand pie chart"></div>
+              <div class="donut-legend">
+                <span><i class="legend red"></i> O- 28%</span>
+                <span><i class="legend blue"></i> A+ 24%</span>
+                <span><i class="legend green"></i> B+ 20%</span>
+                <span><i class="legend orange"></i> AB 15%</span>
+                <span><i class="legend gray"></i> Other 13%</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel" data-search="emergency requests chart bar">
+            <div class="panel-head">
+              <div>
+                <h3>Emergency Requests</h3>
+                <p>Last 7 days.</p>
+              </div>
+              <span class="panel-chip">Bar</span>
+            </div>
+            <div class="bar-chart">
+              <span style="--h:56%"><b>Mon</b></span>
+              <span style="--h:42%"><b>Tue</b></span>
+              <span style="--h:72%"><b>Wed</b></span>
+              <span style="--h:64%"><b>Thu</b></span>
+              <span style="--h:82%"><b>Fri</b></span>
+              <span style="--h:48%"><b>Sat</b></span>
+              <span style="--h:68%"><b>Sun</b></span>
+            </div>
+          </article>
+
+          <article class="panel wide" data-search="blood stock analysis hospital activity donor registration trends">
+            <div class="panel-head">
+              <div>
+                <h3>Operational Signals</h3>
+                <p>Blood stock, hospital activity, and donor registrations.</p>
+              </div>
+              <span class="panel-chip">Area</span>
+            </div>
+            <div class="signal-grid">
+              <div class="signal-card">
+                <span class="material-symbols-rounded">opacity</span>
+                <div>
+                  <strong>Blood Stock</strong>
+                  <p>8,420 units available</p>
+                </div>
+                <meter min="0" max="100" value="72"></meter>
+              </div>
+              <div class="signal-card">
+                <span class="material-symbols-rounded">apartment</span>
+                <div>
+                  <strong>Hospital Activity</strong>
+                  <p>143 active facilities today</p>
+                </div>
+                <meter min="0" max="100" value="81"></meter>
+              </div>
+              <div class="signal-card">
+                <span class="material-symbols-rounded">person_add</span>
+                <div>
+                  <strong>Registrations</strong>
+                  <p>312 new donors this week</p>
+                </div>
+                <meter min="0" max="100" value="66"></meter>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="usersView" data-title="Users Management" data-subtitle="Search, verify, edit, suspend, and audit platform users.">
+        <div class="section-toolbar">
+          <div>
+            <h2>Platform Users</h2>
+            <p>Manage donors, hospitals, and blood bank operators from one verified table.</p>
+          </div>
+          <div class="toolbar-actions">
+            <select class="control-input" id="roleFilter" aria-label="Filter by role">
+              <option value="all">All roles</option>
+              <option value="donor">Donors</option>
+              <option value="hospital">Hospitals</option>
+              <option value="blood bank">Blood Banks</option>
+            </select>
+            <button class="secondary-action" type="button" data-export="users"><span class="material-symbols-rounded">download</span> Export</button>
+          </div>
+        </div>
+        <div class="table-panel">
+          <table class="admin-table" id="usersTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Last Active</th>
+                <th>Verification Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-role="donor" data-search="arjun mehta donor active verified">
+                <td><strong>Arjun Mehta</strong><span>Mumbai, MH</span></td>
+                <td>Donor</td>
+                <td><span class="status success">Active</span></td>
+                <td>4 min ago</td>
+                <td><span class="verified-pill">Secure Verified Data</span></td>
+                <td class="table-actions"><button>Edit</button><button class="toggle-suspend">Suspend</button><button>Delete</button><button>View Profile</button></td>
+              </tr>
+              <tr data-role="hospital" data-search="unity medical center hospital active verified">
+                <td><strong>Unity Medical Center</strong><span>Delhi, DL</span></td>
+                <td>Hospital</td>
+                <td><span class="status success">Active</span></td>
+                <td>12 min ago</td>
+                <td><span class="verified-pill">Verified</span></td>
+                <td class="table-actions"><button>Edit</button><button class="toggle-suspend">Suspend</button><button>Delete</button><button>View Profile</button></td>
+              </tr>
+              <tr data-role="blood bank" data-search="city blood reserve blood bank review encrypted">
+                <td><strong>City Blood Reserve</strong><span>Bengaluru, KA</span></td>
+                <td>Blood Bank</td>
+                <td><span class="status warning">Review</span></td>
+                <td>1 hour ago</td>
+                <td><span class="encrypted-pill">Encrypted Record Status</span></td>
+                <td class="table-actions"><button>Edit</button><button class="toggle-suspend">Suspend</button><button>Delete</button><button>View Profile</button></td>
+              </tr>
+              <tr data-role="donor" data-search="nisha rao donor blocked pending">
+                <td><strong>Nisha Rao</strong><span>Pune, MH</span></td>
+                <td>Donor</td>
+                <td><span class="status danger">Blocked</span></td>
+                <td>Yesterday</td>
+                <td><span class="status warning">Pending</span></td>
+                <td class="table-actions"><button>Edit</button><button class="toggle-suspend">Unblock</button><button>Delete</button><button>View Profile</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="view" id="donorsView" data-title="Donor Management" data-subtitle="Monitor donor eligibility, activity, verification, and response readiness.">
+        <div class="management-grid">
+          <article class="management-card" data-search="eligible donors active verified">
+            <span class="material-symbols-rounded">how_to_reg</span>
+            <strong>18,940</strong>
+            <p>Eligible active donors</p>
+          </article>
+          <article class="management-card" data-search="scheduled donations today">
+            <span class="material-symbols-rounded">event_available</span>
+            <strong>428</strong>
+            <p>Scheduled donations today</p>
+          </article>
+          <article class="management-card" data-search="donor response rate">
+            <span class="material-symbols-rounded">speed</span>
+            <strong>84%</strong>
+            <p>Emergency response rate</p>
+          </article>
+        </div>
+        <div class="table-panel">
+          <table class="admin-table">
+            <thead><tr><th>Donor</th><th>Blood Group</th><th>Eligibility</th><th>Last Donation</th><th>Verification</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr data-search="arjun mehta o negative eligible verified"><td><strong>Arjun Mehta</strong><span>8.2 km away</span></td><td>O-</td><td><span class="status success">Eligible</span></td><td>68 days ago</td><td><span class="verified-pill">Verified</span></td><td class="table-actions"><button>View Profile</button><button>Activity Logs</button></td></tr>
+              <tr data-search="sana khan a positive scheduled encrypted"><td><strong>Sana Khan</strong><span>4.6 km away</span></td><td>A+</td><td><span class="status warning">Scheduled</span></td><td>82 days ago</td><td><span class="encrypted-pill">Encrypted</span></td><td class="table-actions"><button>View Profile</button><button>Activity Logs</button></td></tr>
+              <tr data-search="rohit sen b positive deferred pending"><td><strong>Rohit Sen</strong><span>11.4 km away</span></td><td>B+</td><td><span class="status danger">Deferred</span></td><td>21 days ago</td><td><span class="status warning">Pending</span></td><td class="table-actions"><button>View Profile</button><button>Activity Logs</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="view" id="hospitalsView" data-title="Hospital Management" data-subtitle="Monitor hospital registrations, activity, emergency load, and account verification.">
+        <div class="facility-grid">
+          <article class="facility-card" data-search="unity medical center verified high activity">
+            <div><span class="material-symbols-rounded">local_hospital</span><strong>Unity Medical Center</strong><p>Delhi - 28 active requests this week</p></div>
+            <span class="status success">Verified</span>
+          </article>
+          <article class="facility-card" data-search="greenline hospital verified normal">
+            <div><span class="material-symbols-rounded">local_hospital</span><strong>Greenline Hospital</strong><p>Pune - 12 active requests this week</p></div>
+            <span class="status success">Verified</span>
+          </article>
+          <article class="facility-card" data-search="north care institute review registration">
+            <div><span class="material-symbols-rounded">local_hospital</span><strong>North Care Institute</strong><p>Jaipur - registration review required</p></div>
+            <span class="status warning">Review</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="bloodbanksView" data-title="Blood Banks" data-subtitle="Track connected blood banks, supply health, and compliance status.">
+        <div class="facility-grid">
+          <article class="facility-card" data-search="city blood reserve connected healthy">
+            <div><span class="material-symbols-rounded">inventory_2</span><strong>City Blood Reserve</strong><p>1,820 units - 98% verification rate</p></div>
+            <span class="status success">Healthy</span>
+          </article>
+          <article class="facility-card" data-search="metro blood bank connected low stock">
+            <div><span class="material-symbols-rounded">inventory_2</span><strong>Metro Blood Bank</strong><p>642 units - O- critical threshold</p></div>
+            <span class="status warning">Low Stock</span>
+          </article>
+          <article class="facility-card" data-search="lifeline blood services encrypted verified">
+            <div><span class="material-symbols-rounded">inventory_2</span><strong>Lifeline Blood Services</strong><p>1,104 units - encrypted records healthy</p></div>
+            <span class="status success">Verified</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="emergencyView" data-title="Emergency Requests" data-subtitle="Approve, assign donors, and close emergency blood requests quickly.">
+        <div class="emergency-board">
+          <article class="request-card critical" data-search="unity medical center o negative 6 units critical assigned donors">
+            <div class="request-main">
+              <span class="priority">Critical</span>
+              <h3>Unity Medical Center</h3>
+              <p><strong>O-</strong> blood needed - 6 units required - 8 donors matched</p>
+            </div>
+            <div class="request-actions"><button>Approve</button><button>Assign Donors</button><button>Close Request</button></div>
+          </article>
+          <article class="request-card urgent" data-search="apollo city hospital a positive urgent 4 units assigned donors">
+            <div class="request-main">
+              <span class="priority">Urgent</span>
+              <h3>Apollo City Hospital</h3>
+              <p><strong>A+</strong> blood needed - 4 units required - 5 donors matched</p>
+            </div>
+            <div class="request-actions"><button>Approve</button><button>Assign Donors</button><button>Close Request</button></div>
+          </article>
+          <article class="request-card moderate" data-search="greenline hospital b positive moderate 2 units">
+            <div class="request-main">
+              <span class="priority">Moderate</span>
+              <h3>Greenline Hospital</h3>
+              <p><strong>B+</strong> blood needed - 2 units required - 3 donors matched</p>
+            </div>
+            <div class="request-actions"><button>Approve</button><button>Assign Donors</button><button>Close Request</button></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="inventoryView" data-title="Blood Inventory" data-subtitle="Monitor blood stock across hospitals and connected blood banks.">
+        <div class="inventory-grid">
+          <article class="inventory-card healthy" data-search="o positive healthy available units expiring"><strong>O+</strong><span>2,140 units</span><p>Healthy - 18 expiring soon</p></article>
+          <article class="inventory-card critical" data-search="o negative critical available units expiring"><strong>O-</strong><span>212 units</span><p>Critical - 7 expiring soon</p></article>
+          <article class="inventory-card low" data-search="a positive low available units expiring"><strong>A+</strong><span>628 units</span><p>Low - 22 expiring soon</p></article>
+          <article class="inventory-card healthy" data-search="b positive healthy available units"><strong>B+</strong><span>1,084 units</span><p>Healthy - 10 expiring soon</p></article>
+          <article class="inventory-card low" data-search="ab negative low available units"><strong>AB-</strong><span>194 units</span><p>Low - 3 expiring soon</p></article>
+          <article class="inventory-card healthy" data-search="ab positive healthy available units"><strong>AB+</strong><span>748 units</span><p>Healthy - 6 expiring soon</p></article>
+        </div>
+      </section>
+
+      <section class="view" id="analyticsView" data-title="Reports & Analytics" data-subtitle="Export donor, emergency, inventory, hospital, and donation history reports.">
+        <div class="reports-grid">
+          <article class="report-card" data-search="donor reports csv pdf excel"><span class="material-symbols-rounded">groups</span><strong>Donor Reports</strong><p>Registrations, eligibility, activity logs.</p><div><button data-export="donors">Download CSV</button><button data-export="donors">Export PDF</button></div></article>
+          <article class="report-card" data-search="emergency reports csv pdf excel"><span class="material-symbols-rounded">emergency</span><strong>Emergency Reports</strong><p>Response times, approvals, donor assignments.</p><div><button data-export="emergency">Download CSV</button><button data-export="emergency">Export PDF</button></div></article>
+          <article class="report-card" data-search="blood inventory report excel"><span class="material-symbols-rounded">bloodtype</span><strong>Blood Inventory</strong><p>Stock levels, low alerts, expiring units.</p><div><button data-export="inventory">Download CSV</button><button data-export="inventory">Export PDF</button></div></article>
+          <article class="report-card" data-search="hospital analytics report"><span class="material-symbols-rounded">query_stats</span><strong>Hospital Analytics</strong><p>Activity, request density, verification status.</p><div><button data-export="hospitals">Export PDF</button><button data-export="hospitals">Generate Report</button></div></article>
+          <article class="report-card" data-search="donation history excel"><span class="material-symbols-rounded">history</span><strong>Donation History</strong><p>Completed donations and verified records.</p><div><button data-export="history">Download CSV</button><button data-export="history">Excel</button></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="verificationView" data-title="Blockchain Verification" data-subtitle="Simple verification status for encrypted and tamper-proof medical records.">
+        <div class="verification-grid">
+          <article class="verification-card" data-search="verified records secure verified data">
+            <span class="material-symbols-rounded">verified</span>
+            <strong>Verified Records</strong>
+            <p>1,248,908 records verified and ready for audit.</p>
+            <span class="status success">Operational</span>
+          </article>
+          <article class="verification-card" data-search="encrypted storage status">
+            <span class="material-symbols-rounded">encrypted</span>
+            <strong>Encrypted Storage Status</strong>
+            <p>All sensitive medical records are encrypted at rest.</p>
+            <span class="status success">Healthy</span>
+          </article>
+          <article class="verification-card" data-search="secure transaction logs verification status">
+            <span class="material-symbols-rounded">receipt_long</span>
+            <strong>Secure Transaction Logs</strong>
+            <p>Donation and request events are tamper-proof and synchronized.</p>
+            <span class="status success">Verified</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="notificationsView" data-title="Notifications" data-subtitle="Track emergency alerts, registrations, stock alerts, suspicious activity, and system updates.">
+        <div class="notification-list">
+          <article class="notification-item critical" data-search="emergency blood request critical"><span class="material-symbols-rounded">emergency</span><div><strong>New emergency blood request</strong><p>Unity Medical Center requested O- units.</p><small>2 min ago</small></div></article>
+          <article class="notification-item success" data-search="new hospital registration"><span class="material-symbols-rounded">local_hospital</span><div><strong>New hospital registration</strong><p>Greenline Hospital submitted verified credentials.</p><small>18 min ago</small></div></article>
+          <article class="notification-item warning" data-search="low blood stock alert"><span class="material-symbols-rounded">bloodtype</span><div><strong>Low blood stock alert</strong><p>Metro Blood Bank O- supply is critical.</p><small>23 min ago</small></div></article>
+          <article class="notification-item neutral" data-search="suspicious activity system update"><span class="material-symbols-rounded">policy</span><div><strong>Suspicious activity check</strong><p>One admin session required additional verification.</p><small>46 min ago</small></div></article>
+          <article class="notification-item neutral" data-search="system update backup"><span class="material-symbols-rounded">cloud_sync</span><div><strong>System update</strong><p>Encrypted backup completed successfully.</p><small>1 hour ago</small></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="settingsView" data-title="Settings" data-subtitle="Control platform security, email, backup, access, and API settings.">
+        <div class="settings-grid">
+          <article class="settings-card" data-search="platform settings"><span class="material-symbols-rounded">tune</span><div><strong>Platform Settings</strong><p>Regional operations, request rules, donor limits.</p></div><button>Manage</button></article>
+          <article class="settings-card" data-search="security settings access control"><span class="material-symbols-rounded">security</span><div><strong>Security Settings</strong><p>Session policies, 2FA, encrypted record rules.</p></div><button>Manage</button></article>
+          <article class="settings-card" data-search="email settings"><span class="material-symbols-rounded">mail</span><div><strong>Email Settings</strong><p>Templates, emergency notices, report delivery.</p></div><button>Manage</button></article>
+          <article class="settings-card" data-search="backup management"><span class="material-symbols-rounded">backup</span><div><strong>Backup Management</strong><p>Encrypted backups and recovery checkpoints.</p></div><button>Manage</button></article>
+          <article class="settings-card" data-search="api management"><span class="material-symbols-rounded">api</span><div><strong>API Management</strong><p>Hospital and blood bank integration controls.</p></div><button>Manage</button></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="../api-client.js" data-role="admin" data-login="./"></script>
+  <script src="./admin.js"></script>
+</body>
+</html>

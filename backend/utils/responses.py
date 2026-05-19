@@ -1,0 +1,13 @@
+from flask import jsonify
+
+
+def success_response(message, status_code=200, **payload):
+    body = {"success": True, "message": message}
+    body.update(payload)
+    return jsonify(body), status_code
+
+
+def error_response(message, status_code=400, **payload):
+    body = {"success": False, "message": message}
+    body.update(payload)
+    return jsonify(body), status_code

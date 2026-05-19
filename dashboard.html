@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hemo Chain — My Dashboard</title>
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-top">
+    <a href="index.html" class="sb-logo"><svg viewBox="0 0 36 36" fill="none"><path d="M18 3C18 3 6 16 6 23a12 12 0 0024 0C30 16 18 3 18 3z" fill="#DC143C"/><rect x="14" y="14" width="8" height="2" rx="1" fill="#fff"/><rect x="14" y="18" width="8" height="2" rx="1" fill="#fff"/><rect x="14" y="22" width="8" height="2" rx="1" fill="#fff"/></svg><span>Hemo<b>Chain</b></span></a>
+  </div>
+  <nav class="sb-menu">
+    <a href="#" class="sb-link active" data-p="home"><span class="material-symbols-rounded">home</span>Home</a>
+    <a href="#" class="sb-link" data-p="donate"><span class="material-symbols-rounded">bloodtype</span>Donate Blood</a>
+    <a href="#" class="sb-link" data-p="emergency"><span class="material-symbols-rounded">emergency</span>Emergency<span class="badge"></span></a>
+    <a href="#" class="sb-link" data-p="hospitals"><span class="material-symbols-rounded">local_hospital</span>Nearby Hospitals</a>
+    <a href="#" class="sb-link" data-p="history"><span class="material-symbols-rounded">history</span>My Donations</a>
+    <a href="#" class="sb-link" data-p="notif"><span class="material-symbols-rounded">notifications</span>Notifications<span class="badge"></span></a>
+    <a href="#" class="sb-link" data-p="profile"><span class="material-symbols-rounded">person</span>Profile</a>
+  </nav>
+  <div class="sb-bottom">
+    <div class="sb-user"><div class="sb-avatar">--</div><div><span class="sb-name">Loading...</span><span class="sb-role">Donor</span></div></div>
+    <a href="index.html" class="sb-link logout"><span class="material-symbols-rounded">logout</span>Logout</a>
+  </div>
+</aside>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="#" class="bn active" data-p="home"><span class="material-symbols-rounded">home</span>Home</a>
+  <a href="#" class="bn" data-p="donate"><span class="material-symbols-rounded">bloodtype</span>Donate</a>
+  <a href="#" class="bn sos-b" data-p="emergency"><span class="material-symbols-rounded">emergency</span>SOS</a>
+  <a href="#" class="bn" data-p="history"><span class="material-symbols-rounded">history</span>History</a>
+  <a href="#" class="bn" data-p="profile"><span class="material-symbols-rounded">person</span>Profile</a>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+<header class="header">
+  <button class="menu-btn" id="menuBtn"><span class="material-symbols-rounded">menu</span></button>
+  <div class="h-left"><h2>Welcome, <span class="hl">...</span> 👋</h2><p>Let's save lives today</p></div>
+  <div class="h-right">
+    <button class="sos-hdr" onclick="switchPage('emergency')"><span class="material-symbols-rounded">emergency</span><span class="sos-txt">Emergency SOS</span></button>
+    <button class="icon-btn" id="notifBtnH"><span class="material-symbols-rounded">notifications</span><span class="dot"></span></button>
+    <div class="h-avatar">--</div>
+  </div>
+</header>
+
+<!-- ==================== PAGE: HOME ==================== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-text">
+      <div class="tag green"><span class="material-symbols-rounded">check_circle</span> Loading...</div>
+      <h1>Loading <span class="hl">...</span></h1>
+      <p>Your blood donations are making a real difference. Thank you for being a hero!</p>
+      <div class="hero-info">
+        <div class="hi"><span class="material-symbols-rounded">bloodtype</span><div><small>Blood Group</small><strong>...</strong></div></div>
+        <div class="hi"><span class="material-symbols-rounded">event</span><div><small>Last Donated</small><strong>...</strong></div></div>
+        <div class="hi"><span class="material-symbols-rounded">calendar_today</span><div><small>Next Eligible</small><strong>...</strong></div></div>
+      </div>
+    </div>
+    <div class="hero-vis"><svg viewBox="0 0 120 160" fill="none" class="drop"><defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DC143C"/><stop offset="100%" stop-color="#8B0000"/></linearGradient></defs><path d="M60 10C60 10 15 70 15 100a45 45 0 0090 0C105 70 60 10 60 10z" fill="url(#dg)" opacity=".9"/><rect x="47" y="78" width="26" height="5" rx="2.5" fill="#fff" opacity=".8"/><rect x="57" y="68" width="6" height="26" rx="3" fill="#fff" opacity=".8"/></svg></div>
+  </section>
+  <section class="stats">
+    <div class="stat"><span class="material-symbols-rounded si red">bloodtype</span><div><strong class="ctr" data-t="0">0</strong><small>Donations</small></div></div>
+    <div class="stat"><span class="material-symbols-rounded si green">volunteer_activism</span><div><strong class="ctr" data-t="0">0</strong><small>Lives Saved</small></div></div>
+    <div class="stat"><span class="material-symbols-rounded si orange">emergency</span><div><strong class="ctr" data-t="0">0</strong><small>Emergencies</small></div></div>
+  </section>
+  <section>
+    <h3 class="stitle">Quick Actions</h3>
+    <div class="act-grid">
+      <button class="act red" onclick="switchPage('donate')"><span class="material-symbols-rounded">bloodtype</span>Donate Now</button>
+      <button class="act orange" onclick="switchPage('emergency')"><span class="material-symbols-rounded">emergency</span>Request Blood</button>
+      <button class="act blue" onclick="switchPage('hospitals')"><span class="material-symbols-rounded">location_on</span>Find Hospital</button>
+      <button class="act dark" onclick="switchPage('emergency')"><span class="material-symbols-rounded">sos</span>Emergency SOS</button>
+    </div>
+  </section>
+  <section class="card-s">
+    <div class="sec-h"><h3 class="stitle"><span class="material-symbols-rounded">emergency</span> Nearby Emergencies</h3><span class="live"><span class="ld"></span>Live</span></div>
+    <div class="er-list" id="homeER"></div>
+  </section>
+</div>
+
+<!-- ==================== PAGE: DONATE ==================== -->
+<div class="page" id="page-donate">
+  <div class="pg-head"><h1><span class="material-symbols-rounded">bloodtype</span> Donate Blood</h1><p>Book a blood donation at a hospital near you</p></div>
+  <div class="card-s elig-card">
+    <span class="material-symbols-rounded elig-icon">check_circle</span>
+    <div><h3>Loading eligibility...</h3><p>Checking your status</p></div>
+  </div>
+  <h3 class="stitle">Select a Hospital</h3>
+  <div class="hosp-list"><p style="text-align:center;color:#888;padding:24px">Loading hospitals...</p></div>
+  <h3 class="stitle">Pick Date & Time</h3>
+  <div class="dt-row">
+    <div class="inp-g"><label>Date</label><input type="date" class="inp" id="donateDate"></div>
+    <div class="inp-g"><label>Time Slot</label><select class="inp" id="donateTime"><option>9:00 AM - 10:00 AM</option><option>10:00 AM - 11:00 AM</option><option>11:00 AM - 12:00 PM</option><option>2:00 PM - 3:00 PM</option><option>3:00 PM - 4:00 PM</option></select></div>
+  </div>
+  <button class="big-btn" id="confirmDonate"><span class="material-symbols-rounded">check_circle</span> Confirm Donation</button>
+</div>
+
+<!-- ==================== PAGE: EMERGENCY ==================== -->
+<div class="page" id="page-emergency">
+  <div class="emg-banner"><span class="material-symbols-rounded">emergency</span><div><h1>Emergency Blood Request</h1><p>Request or respond to urgent blood needs</p></div></div>
+  <div class="card-s">
+    <h3 class="stitle">Request Blood</h3>
+    <div class="form-grid">
+      <div class="inp-g"><label>Blood Group Needed</label><select class="inp"><option>Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+      <div class="inp-g"><label>Hospital Name</label><input type="text" class="inp" placeholder="Enter hospital name"></div>
+      <div class="inp-g"><label>Contact Number</label><input type="tel" class="inp" placeholder="+91 XXXXX XXXXX"></div>
+      <div class="inp-g"><label>Location</label><input type="text" class="inp" placeholder="City or area"></div>
+    </div>
+    <button class="big-btn emg-btn"><span class="material-symbols-rounded">emergency</span> Send Emergency Request</button>
+  </div>
+  <div class="card-s">
+    <div class="sec-h"><h3 class="stitle"><span class="material-symbols-rounded">emergency</span> Active Emergencies Nearby</h3><span class="live"><span class="ld"></span>Live</span></div>
+    <div class="er-list" id="emgER"></div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: HOSPITALS ==================== -->
+<div class="page" id="page-hospitals">
+  <div class="pg-head"><h1><span class="material-symbols-rounded">local_hospital</span> Nearby Hospitals</h1><p>Find hospitals and blood banks near you</p></div>
+  <div class="search-bar"><span class="material-symbols-rounded">search</span><input type="text" placeholder="Search hospitals..." id="hospSearch"></div>
+  <div class="hosp-full-list" id="hospFullList"><p style="text-align:center;color:#888;padding:40px">Loading hospitals...</p></div>
+</div>
+
+<!-- ==================== PAGE: HISTORY ==================== -->
+<div class="page" id="page-history">
+  <div class="pg-head"><h1><span class="material-symbols-rounded">history</span> My Donations</h1><p>Your complete donation history</p></div>
+  <div class="hist-summary">
+    <div class="hs"><span class="material-symbols-rounded si red">bloodtype</span><div><strong>0</strong><small>Total Donations</small></div></div>
+    <div class="hs"><span class="material-symbols-rounded si green">volunteer_activism</span><div><strong>0</strong><small>Lives Helped</small></div></div>
+    <div class="hs"><span class="material-symbols-rounded si blue">event</span><div><strong>N/A</strong><small>Last Donated</small></div></div>
+  </div>
+  <div class="don-list"><p style="text-align:center;color:#888;padding:40px">Loading donations...</p></div>
+</div>
+
+<!-- ==================== PAGE: NOTIFICATIONS ==================== -->
+<div class="page" id="page-notif">
+  <div class="pg-head"><h1><span class="material-symbols-rounded">notifications</span> Notifications</h1><p>Stay updated with important alerts</p></div>
+  <div class="ntf-actions"><button class="ntf-btn" id="markAll"><span class="material-symbols-rounded">done_all</span> Mark All as Read</button><button class="ntf-btn" id="clearAll"><span class="material-symbols-rounded">delete_sweep</span> Clear All</button></div>
+  <div class="ntf-list" id="ntfList"><p style="text-align:center;color:#888;padding:40px">Loading notifications...</p></div>
+</div>
+
+<!-- ==================== PAGE: PROFILE ==================== -->
+<div class="page" id="page-profile">
+  <div class="pg-head"><h1><span class="material-symbols-rounded">person</span> My Profile</h1><p>Manage your personal details</p></div>
+  <div class="prof-card">
+    <div class="prof-top"><div class="prof-avatar">--</div><div><h3>Loading...</h3><p class="prof-bg">Blood Group: <strong>...</strong></p></div></div>
+    <div class="prof-fields">
+      <div class="inp-g"><label>Full Name</label><input type="text" class="inp" value=""></div>
+      <div class="inp-g"><label>Phone Number</label><input type="tel" class="inp" value=""></div>
+      <div class="inp-g"><label>Email</label><input type="email" class="inp" value=""></div>
+      <div class="inp-g"><label>Blood Group</label><select class="inp"><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+      <div class="inp-g"><label>Address</label><input type="text" class="inp" value=""></div>
+      <div class="inp-g"><label>Last Donation</label><input type="text" class="inp" value="" disabled></div>
+    </div>
+    <button class="big-btn"><span class="material-symbols-rounded">save</span> Save Changes</button>
+  </div>
+  <div class="prof-actions">
+    <button class="outline-btn"><span class="material-symbols-rounded">lock</span> Change Password</button>
+    <button class="outline-btn danger"><span class="material-symbols-rounded">logout</span> Logout</button>
+  </div>
+</div>
+
+</main>
+<script src="api-client.js" data-role="donor" data-login="auth.html"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
