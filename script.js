@@ -120,20 +120,44 @@ document.addEventListener('DOMContentLoaded', () => {
   centerNode.style.cssText = `left:calc(50% - 28px);top:calc(50% - 28px);width:64px;height:64px;font-size:24px;background:linear-gradient(135deg,#fff,#e0e0e0);z-index:2`;
   matchVis.appendChild(centerNode);
 
-  // === Map Dots ===
-  const mapDots = document.getElementById('mapDots');
-  const locations = [
-    [20,30],[35,25],[50,20],[65,35],[80,25],[25,50],[40,45],[55,55],[70,50],[85,45],
-    [30,70],[45,65],[60,75],[75,70],[15,40],[90,55],[50,40],[35,60],[65,60],[22,62],
-  ];
-  locations.forEach(([x, y], i) => {
-    const dot = document.createElement('div');
-    dot.className = 'map-dot';
-    dot.style.left = x + '%';
-    dot.style.top = y + '%';
-    dot.style.animationDelay = `${i * 0.15}s`;
-    mapDots.appendChild(dot);
-  });
+  // === Live Map (Leaflet + OpenStreetMap) ===
+  const mapEl = document.getElementById('liveMap');
+  if (mapEl && typeof L !== 'undefined') {
+    const map = L.map('liveMap', { scrollWheelZoom: false, attributionControl: false }).setView([22.5, 79], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+    function pin(color) {
+      return L.divIcon({
+        className: '',
+        html: `<div style="width:14px;height:14px;background:${color};border-radius:50%;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)"></div>`,
+        iconSize: [14, 14], iconAnchor: [7, 7]
+      });
+    }
+    const hospitals = [
+      [28.6139,77.2090,'AIIMS Delhi'],[19.0760,72.8777,'KEM Mumbai'],[12.9716,77.5946,'Fortis Bangalore'],
+      [17.3850,78.4867,'Apollo Hyderabad'],[13.0827,80.2707,'CMC Chennai'],[22.5726,88.3639,'SSKM Kolkata'],
+      [26.8467,80.9462,'KGMU Lucknow'],[23.0225,72.5714,'Civil Ahmedabad'],[25.3176,82.9739,'BHU Varanasi'],
+      [30.7333,76.7794,'PGI Chandigarh'],[21.1702,72.8311,'SMIMER Surat'],[26.9124,75.7873,'SMS Jaipur'],
+    ];
+    const banks = [
+      [28.5355,77.3910,'Red Cross Delhi'],[18.5204,73.8567,'Jankalyan Pune'],[12.2958,76.6394,'KR Hospital Mysore'],
+      [11.0168,76.9558,'IRCS Coimbatore'],[15.3173,75.7139,'SDM Dharwad'],[22.7196,75.8577,'MY Hospital Indore'],
+      [26.4499,74.6399,'Red Cross Ajmer'],[20.9517,85.0985,'SCB Cuttack'],
+    ];
+    const camps = [
+      [28.7041,77.1025,'Rohini Camp'],[19.2183,72.9781,'Thane Drive'],[13.0358,77.5970,'Yelahanka Camp'],
+      [17.4065,78.4772,'Secunderabad Drive'],[23.2599,77.4126,'Bhopal Camp'],[21.1458,79.0882,'Nagpur Camp'],
+    ];
+    hospitals.forEach(([lat,lng,name]) => L.marker([lat,lng],{icon:pin('#DC143C')}).addTo(map).bindPopup(`<b>${name}</b><br>Hospital`));
+    banks.forEach(([lat,lng,name]) => L.marker([lat,lng],{icon:pin('#3b82f6')}).addTo(map).bindPopup(`<b>${name}</b><br>Blood Bank`));
+    camps.forEach(([lat,lng,name]) => L.marker([lat,lng],{icon:pin('#22c55e')}).addTo(map).bindPopup(`<b>${name}</b><br>Donation Camp`));
+    // Invalidate size when map section scrolls into view
+    const mapObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { map.invalidateSize(); mapObs.unobserve(mapEl); }
+    }, { threshold: 0.1 });
+    mapObs.observe(mapEl);
+  }
 
   // === FAQ ===
   const faqs = [
