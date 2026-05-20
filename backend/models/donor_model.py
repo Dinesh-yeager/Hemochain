@@ -18,6 +18,10 @@ def calculate_eligibility(last_donation_date):
         except ValueError:
             return True, None
 
+    # Ensure timezone-aware for comparison
+    if last_donation_date.tzinfo is None:
+        last_donation_date = last_donation_date.replace(tzinfo=timezone.utc)
+
     next_eligible = last_donation_date + timedelta(days=90)
     now = datetime.now(timezone.utc)
     return now >= next_eligible, next_eligible.isoformat()
