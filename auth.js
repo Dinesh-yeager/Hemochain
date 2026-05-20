@@ -79,16 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function saveAuthSession(data, remember) {
     const storage = authStorage(remember);
+    // Clear BOTH stores first to prevent stale role conflicts
+    [localStorage, sessionStorage].forEach(s =>
+      [AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY, AUTH_ROLE_KEY, AUTH_USER_KEY].forEach(k => s.removeItem(k))
+    );
     storage.setItem(AUTH_TOKEN_KEY, data.token);
     storage.setItem(REFRESH_TOKEN_KEY, data.refresh_token || '');
     storage.setItem(AUTH_ROLE_KEY, data.role);
     storage.setItem(AUTH_USER_KEY, JSON.stringify(data.user || {}));
-
-    const other = remember ? sessionStorage : localStorage;
-    other.removeItem(AUTH_TOKEN_KEY);
-    other.removeItem(REFRESH_TOKEN_KEY);
-    other.removeItem(AUTH_ROLE_KEY);
-    other.removeItem(AUTH_USER_KEY);
   }
 
   function collectPayload(form) {

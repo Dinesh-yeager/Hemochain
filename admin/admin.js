@@ -17,11 +17,11 @@
 
   function setSession(remember, data) {
     const store = remember ? localStorage : sessionStorage;
-    const other = remember ? sessionStorage : localStorage;
+    // Clear BOTH stores first to prevent stale role conflicts
+    [localStorage, sessionStorage].forEach(s => [SESSION_KEY, TOKEN_KEY, REFRESH_TOKEN_KEY, ROLE_KEY, USER_KEY].forEach(k => s.removeItem(k)));
     store.setItem(SESSION_KEY, "active"); store.setItem(TOKEN_KEY, data.token);
     store.setItem(REFRESH_TOKEN_KEY, data.refresh_token || ""); store.setItem(ROLE_KEY, data.role);
     store.setItem(USER_KEY, JSON.stringify(data.user || {}));
-    [SESSION_KEY, TOKEN_KEY, REFRESH_TOKEN_KEY, ROLE_KEY, USER_KEY].forEach(k => other.removeItem(k));
   }
   function clearSession() { [localStorage, sessionStorage].forEach(s => [SESSION_KEY, TOKEN_KEY, REFRESH_TOKEN_KEY, ROLE_KEY, USER_KEY].forEach(k => s.removeItem(k))); }
 
