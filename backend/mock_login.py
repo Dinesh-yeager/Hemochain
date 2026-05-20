@@ -18,7 +18,7 @@ app = create_app()
 def seed_mock_users():
     with app.app_context():
         db = get_db()
-        password = "asdfghjkl"
+        password = "Admin@123"
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
 
         # ── STEP 1: Wipe all existing data ──
@@ -97,10 +97,10 @@ def seed_mock_users():
                 "collection": "admins",
                 "role": "admin",
                 "data": {
-                    "admin_name": "Mock Admin",
-                    "email": normalize_email("admin@gmail.com"),
+                    "admin_name": "Super Admin",
+                    "email": normalize_email("admin@hemochain.in"),
                     "password": hashed_password,
-                    "role": "super_admin",
+                    "role": "admin",
                     "access_level": 1,
                     "created_at": utc_now(),
                     "updated_at": utc_now()
@@ -118,7 +118,7 @@ def seed_mock_users():
         print(f"   • 1 Donor    → donor@gmail.com")
         print(f"   • 1 Hospital → hospital@gmail.com")
         print(f"   • 1 BloodBank→ bloodbank@gmail.com")
-        print(f"   • 1 Admin    → admin@gmail.com")
+        print(f"   • 1 Admin    → admin@hemochain.in")
         print(f"   • Password   → {password}")
 
 

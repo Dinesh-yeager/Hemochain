@@ -27,7 +27,7 @@ class Config:
     MONGO_TIMEOUT_MS = int(os.getenv("MONGO_TIMEOUT_MS", "5000"))
     AUTO_CREATE_INDEXES = os.getenv("AUTO_CREATE_INDEXES", "true").lower() == "true"
 
-    CORS_ORIGINS = _csv("CORS_ORIGINS", "http://localhost:8080,http://127.0.0.1:8080")
+    CORS_ORIGINS = _csv("CORS_ORIGINS", "http://localhost:5000,http://127.0.0.1:5000,https://*.vercel.app")
     FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "http://localhost:8080")
 
     SESSION_COOKIE_HTTPONLY = True
